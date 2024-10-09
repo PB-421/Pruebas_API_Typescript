@@ -38,34 +38,27 @@ function handle(req:Request):Response { //Darme una respuesta en funcion de la r
   const path = url.pathname;//Saco la ruta
   const searchparams = url.searchParams; //Con esto saco los parametros de busqueda que se separan con un ?, como /users?nombre=Pablo
   if(path==="/usuarios"){
-      if(searchparams.get("nombre")){ // comprobar si hay parametro de busqueda
-        const nameS = searchparams.get("nombre")
-        let usr = usuarios.filter((elem) => elem.nombre === nameS)
-          if(!searchparams.get("edad")){
-              return new Response(JSON.stringify(usr))
-          } else {
-              const edadS = searchparams.get("edad")
-              let edadN = 0
+    if(searchparams.get("nombre") && searchparams.get("edad")){
+      const nameS = searchparams.get("nombre")
+      const edadS = searchparams.get("edad")
+      let edadN = 0
               if(edadS){
                   edadN = parseInt(edadS,10)
               }
-              usr = usuarios.filter((elem) => elem.nombre === nameS).filter((elem) => elem.edad === edadN)
-              return new Response(JSON.stringify(usr))
-          }
-      } else if (searchparams.get("edad")){
+      const usr = usuarios.filter((elem) => elem.nombre === nameS).filter((elem) => elem.edad === edadN) 
+      return new Response(JSON.stringify(usr))
+    } else if(searchparams.get("nombre")){ // comprobar si hay parametro de busqueda
+        const nameS = searchparams.get("nombre")
+        const usr = usuarios.filter((elem) => elem.nombre === nameS)
+        return new Response(JSON.stringify(usr))
+    } else if (searchparams.get("edad")){
         const edadS = searchparams.get("edad")
         let edadN = 0
               if(edadS){
                   edadN = parseInt(edadS,10)
               }
-        let usr = usuarios.filter((elem) => elem.edad === edadN)
-          if(!searchparams.get("nombre")){
-              return new Response(JSON.stringify(usr))
-          } else {
-              const nameS = searchparams.get("nombre")
-              usr = usuarios.filter((elem) => elem.nombre === nameS).filter((elem) => elem.edad === edadN)
-              return new Response(JSON.stringify(usr))
-          }
+        const usr = usuarios.filter((elem) => elem.edad === edadN)
+        return new Response(JSON.stringify(usr))
       } 
     return new Response(JSON.stringify(usuarios))
   }
