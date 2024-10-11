@@ -1,6 +1,10 @@
-//API rest: Programa que tiene endpoints, que atiende peticiones a traves del protocolo HTTPS
+//API rest: Programa que tiene endpoints, que atiende peticiones a traves del protocolo HTTPS: Posee Protocolo, ruta y metodo
 
-//Endpoint: Tiene Ruta: www.web.com/usuarios, metodo: PUT, GET, POST, DELETE, payload:
+//Endpoint: Tiene Ruta: www.web.com/usuarios, metodo: PUT, GET, POST, DELETE, payload: carga util, datos que envio
+
+//GET = Pedir, PUT=Modificar, POST=Añadir, DELETE=Borrar
+
+// Instalar Postman, configurar
 
 //En el json, poner un -A, para los permisos
 
@@ -33,12 +37,14 @@ const usuarios = [
 ]
 
 
+
+
 function handle(req:Request):Response { //Darme una respuesta en funcion de la ruta, con parametro de busqueda
   const url = new URL(req.url) //Asi se la ruta
   const path = url.pathname;//Saco la ruta
   const searchparams = url.searchParams; //Con esto saco los parametros de busqueda que se separan con un ?, como /users?nombre=Pablo
   if(path==="/usuarios"){
-    if(searchparams.get("nombre") && searchparams.get("edad")){
+    if(searchparams.get("nombre") && searchparams.get("edad")){// /usuarios?nombre=Pablo&edad=21
       const nameS = searchparams.get("nombre")
       const edadS = searchparams.get("edad")
       let edadN = 0
